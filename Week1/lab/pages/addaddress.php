@@ -25,6 +25,9 @@
         $birthday = filter_input(INPUT_POST, 'birthday');
         
         $zipRegex = "/^([0-9]{5})(-[0-9]{4})?$/i";
+        $nameRegex = '/^[A-Za-z0-9]{3,20}$/';
+        $stateRegex = '/^[A-Za-z0-9]{2}$/';
+        
         
         
         $addresses = getAllAddress();
@@ -33,20 +36,20 @@
         if ( isPostRequest() ) {
             
             
-            if ( empty($fullName) ) {
-                $errors[] = 'Your Name Must be Filled In';
+            if ( empty($fullName) || !preg_match($nameRegex, $fullName) ) {
+                $errors[] = 'Your Name Must cannot be empty and must be in the correct format';
             }  
             if ( empty($email) ) {
                 $errors[] = 'Email is Empty';
             }  
-            if ( empty($addressLine1) ) {
-                $errors[] = 'Your Address is Empty';
+            if ( empty($addressLine1) || !preg_match($nameRegex, $addressLine1) ) {
+                $errors[] = 'Your Address is Empty or in the wrong format';
             }  
-            if ( empty($city) ) {
-                $errors[] = 'City Must be Filled In';
+            if ( empty($city) || !preg_match($nameRegex, $city) ) {
+                $errors[] = 'City Must be Filled In and must be in the correct format';
             }  
-            if ( empty($state) ) {
-                $errors[] = 'State is Empty';
+            if ( empty($state) || !preg_match($stateRegex, $state) ) {
+                $errors[] = 'State cannot be Empty and must be in the correct format';
             }  
             if ( empty($zip) || !preg_match($zipRegex, $zip) ) {
                 $errors[] = 'Zip is Empty or Not in the Correct Format';
