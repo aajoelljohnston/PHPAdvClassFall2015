@@ -24,6 +24,9 @@
         $zip = filter_input(INPUT_POST, 'zip');
         $birthday = filter_input(INPUT_POST, 'birthday');
         
+        $zipRegex = "/^([0-9]{5})(-[0-9]{4})?$/i";
+        
+        
         $addresses = getAllAddress();
         $errors = array();
         
@@ -45,8 +48,8 @@
             if ( empty($state) ) {
                 $errors[] = 'State is Empty';
             }  
-            if ( empty($zip) ) {
-                $errors[] = 'Zip is Empty';
+            if ( empty($zip) || !preg_match($zipRegex, $zip) ) {
+                $errors[] = 'Zip is Empty or Not in the Correct Format';
             }  
             if ( empty($birthday) ) {
                 $errors[] = 'Birthday Cannot be Empty'; 
