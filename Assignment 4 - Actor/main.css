@@ -1,0 +1,41 @@
+/* the styles for the HTML elements */
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+td, th {
+    border: 1px solid black;
+    padding: .2em .5em .2em .5em;
+    vertical-align: top;
+    text-align: left;
+}
+form {
+    margin: 0;
+}
+br {
+    clear: left;
+}
+
+/********************************************************************
+* Additional styles for the ? application
+********************************************************************/
+#actors {
+    margin: .5em 0 2em;
+}
+/* #actors label {
+    width: 6em;
+    padding-right: 1em;
+    padding-bottom: .5em;
+    float: left;
+} */
+#actorsinput {
+    float: left;
+}
+#actors input[text] {
+    width: 15em;
+}
+
+#birthDate {
+	background-color: green;
+}
