@@ -44,4 +44,18 @@ class Signup {
         return false;
         
     }
+    
+    
+    public function doesEmailExist($email) {
+
+        $stmt = $this->getDb()->prepare('SELECT * FROM users WHERE email = :email');
+
+        $binds = array(
+            ":email" => $email
+        );
+        if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
+            return true;
+        }
+        return false;
+    }
 }

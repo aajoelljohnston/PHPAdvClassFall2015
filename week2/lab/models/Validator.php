@@ -27,4 +27,20 @@ class Validator {
     public function phoneIsValid($phone) {
         return ( preg_match("/^\(?([2-9]{1}[0-9]{2})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/", $phone) );
     }
+    
+    public function passwordIsEmpty($password) {
+        if (empty($password)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+     public function emailIsEmpty($email) {
+        if (empty($email)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

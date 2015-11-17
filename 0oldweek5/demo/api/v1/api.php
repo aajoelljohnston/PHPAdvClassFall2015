@@ -4,7 +4,6 @@
 
 try {
     
-    
     $config = array(
         'DB_DNS' => 'mysql:host=localhost;port=3306;dbname=PHPAdvClassFall2015',
         'DB_USER' => 'root',
@@ -13,6 +12,10 @@ try {
     
     $db = new PDO($config['DB_DNS'], $config['DB_USER'], $config['DB_PASSWORD']);
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    
+    
+    
+    
     
     
     
@@ -90,5 +93,5 @@ try {
 
 
 
-
-
+header("HTTP/1.1 " . $status . " " . $status_codes[$status]);
+echo json_encode($response, JSON_PRETTY_PRINT);

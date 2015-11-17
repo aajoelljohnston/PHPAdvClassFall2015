@@ -15,6 +15,25 @@ class Login {
     //put your code here
     
     
+    
+    private $db;
+
+    function __construct() {
+
+        $util = new Util();
+        $dbo = new DB($util->getDBConfig());
+        $this->setDb($dbo->getDB());
+    }
+
+    private function getDb() {
+        return $this->db;
+    }
+
+    private function setDb($db) {
+        $this->db = $db;
+    }
+    
+    
     public function verify($email, $password) {
         
         $stmt = $this->getDb()->prepare("SELECT * FROM users WHERE email = :email");
@@ -29,8 +48,20 @@ class Login {
             }
         }
         
-        return 0;
+        //return 0;
     }
-    
+  
+     public function emailDoesnotExist($email) {
+
+        $stmt = $this->getDb()->prepare('SELECT * FROM users WHERE email = :email');
+
+        $binds = array(
+            ":email" => $email
+        );
+        if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
+            return true;
+        }
+        return false;
+    }
     
 }
