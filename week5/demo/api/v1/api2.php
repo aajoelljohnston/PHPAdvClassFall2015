@@ -1,85 +1,72 @@
+<?php require_once './autoload.php'; ?>
 <?php
 
-include_once './bootstrap.php';
-
-$restServer = new RestServer();
-
 try {
-    
+    // Rest Server Class New Instance
+    $restServer = new RestServer ();
+    //Rest Server starts with a 200 message 
     $restServer->setStatus(200);
-    
-    $resource = $restServer->getResource();
-    $verb = $restServer->getVerb();
-    $id = $restServer->getId();
-    $serverData = $restServer->getServerData();
-    
-    
-     $config = array(
-        'DB_DNS' => 'mysql:host=localhost;port=3306;dbname=PHPAdvClassFall2015',
-        'DB_USER' => 'root',
-        'DB_PASSWORD' => ''
-    );
-    
-    $db = new PDO($config['DB_DNS'], $config['DB_USER'], $config['DB_PASSWORD']);
-    $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    
-    
-    
-    
-    if ( 'address' === $resource ) {
-        
-        $resourceData = new AddressResoruce();
-        
-        if ( 'GET' === $verb ) {
-            
-            if ( NULL === $id ) {
-                
-                $restServer->setData($resourceData->getAll());                           
-                
-            } else {
-                
-                $restServer->setData($resourceData->get($id));
-                
-            }            
-            
-        }
-                
-        if ( 'POST' === $verb ) {
-            
 
-            if ($resourceData->post($serverData)) {
-                $restServer->setMessage('Address Added');
-                $restServer->setStatus(201);
+
+    //Rest Server Variables
+    $resource = $restServer->getResource(); //Get the Resources
+    $verb = $restServer->getVerb(); //Get the Verb
+    $getData = $restServer->getServerData(); //Get Data
+    $id = $restServer->getId(); //Get ID
+ 
+    //Get, Put, Post, Delete
+ 
+    if ($resource === 'corps') {
+        $resourceCorps = new Corporations(); //Corporations New Instance
+        $dataResults = null;
+
+
+        if ($verb === 'GET') {
+            if ($id === NULL) {
+                $dataResults = $resourceCorps->getAll();
             } else {
-                throw new Exception('Address could not be added');
+                $dataResults = $resourceCorps->get($id);
             }
-        
+        }
+
+        if ($verb === 'PUT') {
+
+            if ($id === NULL) {
+                throw new InvalidArgumentException('Corporation ID ' . $id . ' was not found');
+            } else {
+                $dataResults = $resourceCorps->put($getData, $id);
+            }
+        }
+ 
+        if ($verb === 'POST') {
+
+
+            if ($resourceCorps->post($getData)) {
+                $restServer->setMessage('New Corporation Information Added');
+                $restServer->setStatus(201);
+
+            } else {
+                throw new Exception('Corporation could not be added');
+            }
+        }
+
+        if ($verb === 'DELETE') {
+
+            if ($id === NULL) {
+                throw new InvalidArgumentException('Id required');
+           
+            } else {
+                if ($resourceCorps->delete($id)) {
+                    $restServer->setMessage($id . ' Has been deleted');
+                }
+            }
         }
         
-        
-        if ( 'PUT' === $verb ) {
-            
-            if ( NULL === $id ) {
-                throw new InvalidArgumentException('Address ID ' . $id . ' was not found');
-            }
-            
-        }
-        
-    } else {
-        throw new InvalidArgumentException($resource . ' Resource Not Found');
-        //$response['errors'] = 'Resource Not Found';
-        //$status = 404;
+        $restServer->setData($dataResults);
     }
-   
-    
-    
-} catch (InvalidArgumentException $e) {
-    $restServer->setStatus(400);
+} catch (Exception $ex) {
     $restServer->setErrors($ex->getMessage());
-} catch (Exception $ex) {    
     $restServer->setStatus(500);
-    $restServer->setErrors($ex->getMessage());   
 }
 
-
-$restServer->outputReponse();
+$restServer->outputResponse();

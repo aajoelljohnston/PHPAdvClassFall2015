@@ -3,7 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <title></title>
-    </head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+     </head>
     <body>
         <style type="text/css">
             textarea {
@@ -28,49 +31,44 @@
         <br />
         <br />
         Resource for endpoint:<br />
-        <input name="resource" value="address" />
-        <br />
-        <br />
+        <input name="resource" value="corps" />
+        <br />     
         Data(optional):<br />   
-        fullname <input type="text" name="fullname" value="" />
+        Corporation Name <input type="text" name="corp" value="" />
         <br />
-        email <input type="email" name="email" value="" />
+        Corp Date Established <input type="date" name="incorp_dt"  />
         <br />
-        addressline1 <input type="text" name="addressline1" value="" />
+        Email <input type="email" name="email" value="">
         <br />
-        city <input type="text" name="city" value="" />
+        Owner <input type="text" name="owner" value="" />
         <br />
-        state <input type="text" name="state" list="states" placeholder="Find U.S. State">
+        Phone <input type="tel" pattern='[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}' name="phone" value="" />
         <br />
-        zip <input type="number" pattern="[0-9]*" maxlength="5" min="0" name="zip">
+        Location <input type="text" name="location" list="states" placeholder="Find U.S. State">       
         <br />
-        birthday <input type="date" name="birthday">
-        <br />
-        <br />
-        <button>Make Call</button>
+        <button>Make Call</button>     
         <h3>Results</h3>
         
         <textarea name="results"></textarea>
         
         <script type="text/javascript">
-        
+
             var callBtn = document.querySelector('button');
-            
+
             callBtn.addEventListener('click', makeCall);
-        
+
             function makeCall() {
                 var verbfield = document.querySelector('select[name="verb"]');
                 var verb = verbfield.options[verbfield.selectedIndex].value;
                 var resource = document.querySelector('input[name="resource"]').value;
                 var data = {
-                    'fullname' : document.querySelector('input[name="fullname"]').value,
-                    'email' : document.querySelector('input[name="email"]').value,
-                    'addressline1' : document.querySelector('input[name="addressline1"]').value,
-                    'city' : document.querySelector('input[name="city"]').value,
-                    'state' : document.querySelector('input[name="state"]').value,
-                    'zip' : document.querySelector('input[name="zip"]').value,
-                    'birthday' : document.querySelector('input[name="birthday"]').value
-                };            
+                    'corp': document.querySelector('input[name="corp"]').value,
+                    'incorp_dt': document.querySelector('input[name="incorp_dt"]').value,
+                    'email': document.querySelector('input[name="email"]').value,
+                    'owner': document.querySelector('input[name="owner"]').value,
+                    'phone': document.querySelector('input[name="phone"]').value,
+                    'location': document.querySelector('input[name="location"]').value
+                };
                 var results = document.querySelector('textarea[name="results"]');
 
                 var xmlhttp = new XMLHttpRequest();
@@ -79,8 +77,8 @@
 
                 xmlhttp.open(verb, url, true);
 
-                xmlhttp.onreadystatechange = function() {
-                    if (xmlhttp.readyState === 4 ) {
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState === 4) {
 
                         console.log(xmlhttp.responseText);
                         results.value = xmlhttp.responseText;
@@ -88,14 +86,14 @@
                         // waiting for the call to complete
                     }
                 };
-                //var username = 'test';
-               // xmlhttp.setRequestHeader("Authorization", "Basic " + btoa(username + "
-               // "));
 
-                 if ( verb === 'GET' ) {
-                      xmlhttp.send(null);
-                 } else {
-                    xmlhttp.setRequestHeader('Content-type','application/json;charset=UTF-8');
+                //var username = 'test';
+                // xmlhttp.setRequestHeader("Authorization", "Basic " + btoa(username + ":"));
+
+                if (verb === 'GET') {
+                    xmlhttp.send(null);
+                } else {
+                    xmlhttp.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
                     xmlhttp.send(JSON.stringify(data));
                 }
             }

@@ -1,9 +1,41 @@
 <?php
 
-
+header("Access-Control-Allow-Orgin: *");
+header("Access-Control-Allow-Methods: GET, POST, UPDATE, DELETE");
+header("Content-Type: application/json; charset=utf8");
 
 try {
     
+    $verb = filter_input(INPUT_SERVER, 'REQUEST_METHOD');
+    $verbs_allowed = array('GET','POST','PUT','DELETE');
+    
+    if ( !in_array($verb, $verbs_allowed) ) {
+        throw new Exception("Unexpected Header Requested ". $verb);
+    }
+  
+    if( strpos(filter_input(INPUT_SERVER, 'CONTENT_TYPE'), "application/json") !== false) {
+        $data = json_decode(trim(file_get_contents('php://input')), true);
+
+        switch ( json_last_error() ) {
+                case JSON_ERROR_NONE:
+                { 
+                  //This tells the client to recieve the JSON data and then send it           
+                }
+                break;
+                case JSON_ERROR_SYNTAX:
+                case JSON_ERROR_UTF8:
+                case JSON_ERROR_DEPTH:
+                case JSON_ERROR_STATE_MISMATCH:
+                case JSON_ERROR_CTRL_CHAR:
+                    throw new Exception(json_last_error_msg());           
+                break;
+                default:
+                   throw new Exception('JSON encode error Unknown error');
+                break;
+            }
+
+           
+    }
     
     $config = array(
         'DB_DNS' => 'mysql:host=localhost;port=3306;dbname=PHPAdvClassFall2015',
@@ -13,8 +45,6 @@ try {
     
     $db = new PDO($config['DB_DNS'], $config['DB_USER'], $config['DB_PASSWORD']);
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    
-    
     
     
     if ( 'address' === $resource ) {
@@ -72,8 +102,7 @@ try {
         
     } else {
         throw new InvalidArgumentException($resource . ' Resource Not Found');
-        //$response['errors'] = 'Resource Not Found';
-        //$status = 404;
+
     }
     
     
@@ -87,8 +116,3 @@ try {
     $response['errors'] = $e->getMessage();
     $status = 500;
 }
-
-
-
-
-

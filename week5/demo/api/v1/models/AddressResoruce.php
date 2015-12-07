@@ -1,8 +1,7 @@
 <?php
 
-class AddressResoruce implements IRestModel {
-    
-      private $db;
+class AddressResource implements iRestModel{
+     private $db;
 
     function __construct() {
         
@@ -18,11 +17,7 @@ class AddressResoruce implements IRestModel {
     private function setDb($db) {
         $this->db = $db;
     }
-
-    
-    
-    
-    
+ 
     public function getAll() {
         $stmt = $this->getDb()->prepare("SELECT * FROM address");
         $results = array();      
@@ -47,8 +42,7 @@ class AddressResoruce implements IRestModel {
     }
     
     public function post($serverData) {
-        /* note you should validate before adding to the data base */
-        $stmt = $this->getDb()->prepare("INSERT INTO address SET fullname = :fullname, email = :email, addressline1 = :addressline1, city = :city, state = :state, zip = :zip, birthday = :birthday");
+        $stmt =  $this->getDb()->prepare("INSERT INTO address SET fullname = :fullname, email = :email, addressline1 = :addressline1, city = :city, state = :state, zip = :zip, birthday = :birthday");
         $binds = array(
             ":fullname" => $serverData['fullname'],
             ":email" => $serverData['email'],
@@ -64,5 +58,12 @@ class AddressResoruce implements IRestModel {
         } 
         return false;
     }
-    
+
+    public function delete() {
+        
+    }
+    public function put() {
+        
+    }
+
 }
