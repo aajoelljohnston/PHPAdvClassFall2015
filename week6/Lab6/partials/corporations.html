@@ -1,0 +1,41 @@
+<html>
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+</head>
+<body>
+    <h1>Corporations List</h1>
+
+    <div class="info">
+
+        <br />
+        <br /> 
+        Search for Corporation by the Owners Name: <input ng-model="search.owner"><br>
+        
+        <div class="table">
+            <table class="table table-striped" id="FindObjectResults" >
+                <thead class="">
+                    <tr>                       
+                        <th>Owner</th>
+                        <th>Email</th> 
+                        <th>Phone</th>
+                        <th>View Corporation</th>                            
+                    </tr>
+                </thead>    
+                <tbody>
+                <tr ng-repeat="corporation in corporations| filter:search">
+                    <td>{{corporation.owner}}</td>                  
+                    <td>{{corporation.email}}</td>
+                    <td>{{corporation.phone}}</td>
+                    <td><a ng-href="#/corps/{{corporation.id}}">View Corporations</a></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</body>
+</html>

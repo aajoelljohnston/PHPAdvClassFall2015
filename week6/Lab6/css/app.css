@@ -1,0 +1,52 @@
+/* app css stylesheet */
+
+.footer {
+    margin-top: 2em;
+    border-top: 2px dashed black;
+    padding: 1em;
+}
+
+.gridtable td {
+	border-width: 4px;
+	padding: 8px;
+	border-style: dashed;
+	border-color: green;
+	background-color: black;
+}
+
+.gridtable {	
+	border-width: 4px;
+	border-color: green;
+	border-collapse: collapse;
+        margin: 0 auto;
+}
+
+.gridtable th {
+	border-width: 4px;
+	padding: 8px;
+	border-style: dashed;
+	border-color: green;
+	background-color: #dedede;
+}
+
+info {
+    text-align: center;
+}
+
+.info {
+    text-align: center;
+}
+
+.googleMap {
+    width: 1000px;
+    height: 500px;
+    margin: auto;
+}
+
+h1 {
+    background-color: green;
+    border: 1px dashed blue;
+    padding: 0.1em;
+    text-align: center;
+    
+}

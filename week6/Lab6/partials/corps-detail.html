@@ -1,0 +1,22 @@
+<h1>Corporations Information</h1>
+<div class="info">
+    
+    <h2>{{corporations.owner}}</h2>
+    
+    <p><strong>Corporation Name: </strong>
+    <a href="" ng-href="mailto:{{corporations.corp}}">{{corporations.corp}}</a>
+    </p>
+    <p><strong>Corporation Date: </strong>
+    <a href="" ng-href="mailto:{{corporations.incorp_dt}}">{{corporations.incorp_dt | date:'longDate'}}</a>
+    </p>
+    <p><strong>Email: </strong>
+        <a href="" ng-href="mailto:{{corporations.email}}">{{corporations.email}}</a>
+    </p>
+    <p><strong>Phone Number: </strong>
+        <a href="" ng-href="Phone:{{corporations.phone}}">{{corporations.phone}}</a>
+    </p>
+
+   <div id="googleMap" style="width:1000px;height:500px;margin:auto;"></div>
+    
+    <p><a href="#/">Return</a></p>
+</div>
