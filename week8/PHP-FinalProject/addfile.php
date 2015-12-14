@@ -1,20 +1,4 @@
-<?php
-require_once './autoload.php';
-
-$logout = filter_input(INPUT_GET, 'logout');
-
-if ($logout == true) {
-    $_SESSION['user_id'] = null;
-}
-
-if (!isset($_SESSION['user_id'])) {
-    header('Location:index.php');
-}
-
-else if (isset($_SESSION['user_id'])) {
-    echo '<H2><a href="?logout=true" >Log Out</a></H2>';
-} 
-?>
+<?php require_once './autoload.php';?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -46,6 +30,25 @@ else if (isset($_SESSION['user_id'])) {
         </style>
     </head>
     <body>
+     
+<?php
+echo ($_SESSION['user_id']);
+
+$util = new Util();
+$logout = filter_input(INPUT_GET, 'logout');
+
+if ($logout == true) {
+    $_SESSION['user_id'] = null;
+}
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location:index.php');
+}
+
+else if (isset($_SESSION['user_id'])) {
+    echo '<H2><a href="?logout=true" >Log Out</a></H2>';
+} 
+?>
         <h2>Image Files</h2>
         <p>
             <a href="view.php">View Images</a>

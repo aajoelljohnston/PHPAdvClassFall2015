@@ -72,8 +72,7 @@
                 } else {
                     $errors = 'Login Failed!';
                 }
-            }
-//               
+            }               
         }
         ?>
         
@@ -81,7 +80,9 @@
         <?php include './templates/messages.html.php'; ?>
         <?php include './templates/errors.html.php'; ?>
         <!--Link to the Sign Up Page-->
-          <a href="signup.php">Sign Up</a>
+        <a href="signup.php">Sign Up</a> </br>
+          <!--Link to the View meme Page-->
+          <a href="view.php">View Meme</a>
 
     </body>
 </html>

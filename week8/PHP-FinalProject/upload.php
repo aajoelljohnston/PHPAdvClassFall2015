@@ -1,5 +1,5 @@
 <?php
-
+require_once './autoload.php';
 header("Access-Control-Allow-Orgin: *");
 header("Content-Type: application/json; charset=utf8");
 
@@ -194,7 +194,10 @@ try {
       }
 
      */
-
+    
+    $util = new Util();
+    $save_uploads = new Save_Uploads(); 
+    $save_uploads->save_UploadedImages(($_SESSION['user_id']), $fileName);
     $message = 'File is uploaded successfully.';
 } catch (RuntimeException $e) {
 

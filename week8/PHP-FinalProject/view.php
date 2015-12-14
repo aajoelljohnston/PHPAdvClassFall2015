@@ -22,30 +22,38 @@
     <body>
         <p><a href=".">Home</a></p>
         <?php
-        $files = array();
-        $directory = '.' . DIRECTORY_SEPARATOR . 'uploads';
-        $dir = new DirectoryIterator($directory);
-        foreach ($dir as $fileInfo) {
-            if ($fileInfo->isFile()) {
-                $files[$fileInfo->getMTime()] = $fileInfo->getPathname();
+        if ((!isset($_SESSION['user_id'])) || ($_SESSION['user_id'] == null)) {
+            
+            $files = array();
+            $directory = '.' . DIRECTORY_SEPARATOR . 'uploads';
+            $dir = new DirectoryIterator($directory);
+            foreach ($dir as $fileInfo) {
+                if ($fileInfo->isFile()) {
+                    $files[$fileInfo->getMTime()] = $fileInfo->getPathname();
+                }
             }
+
+            krsort($files);
+
+            foreach ($files as $key => $path):
+                ?>  
+                <div class="meme"> 
+                    <img src="<?php echo $path; ?>" /> <br />
+                    <?php echo date("l F j, Y, g:i a", $key); ?>
+                    <!-- Place this tag where you want the share button to render. -->
+                    <div class="g-plus" data-action="share" data-href="<?php echo $path; ?>"></div> 
+                </div>
+
+            <?php
+            endforeach;
         }
-
-        krsort($files);
-//ksort($files);
-
-        foreach ($files as $key => $path):
-            ?> 
-            <div class="meme"> 
-                <img src="<?php echo $path; ?>" /> <br />
-                <?php echo date("l F j, Y, g:i a", $key); ?>
-                <!-- Place this tag where you want the share button to render. -->
-                <div class="g-plus" data-action="share" data-href="<?php echo $path; ?>"></div> 
-            </div>
-
-        <?php endforeach; ?>
-
-
+        else {
+             $util = new Util();
+             $users_images = new Users_Images();
+             $userimages =  array();
+             $Users_Images->showUsersImages($_SESSION['user_id']);  
+        }
+        ?>
 
         <p><a href=".">Home</a></p>
         <!-- Place this tag in your head or just before your close body tag. -->
