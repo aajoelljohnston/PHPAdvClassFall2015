@@ -56,7 +56,7 @@
         <?php include './templates/messages.html.php'; ?>
         <?php include './templates/errors.html.php'; ?> 
 
-        <a href="index.php">Login</a>
+        <a href="login.php">Login</a>
 
     </body>
 </html>

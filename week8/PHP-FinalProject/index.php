@@ -1,88 +1,55 @@
-<?php require_once './autoload.php'; ?> 
+<?php require_once './autoload.php';?>
 <!DOCTYPE html>
 <html>
     <head>
+        <h1>AAA Meme Generator</h1>
         <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title></title>
-        <!--Links in header allow bootstrap for styling  -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <style type="text/css">
-                 #files-img {
-                border: 5px dashed #D9D9D9;
-                border-radius: 10px;
-                padding: 1em 2em;
-                text-align: center;
-
-            }
-            .over {
-                background: #F7F7F7;
-            }
-
-            input {
-                margin: 0.5em;
+        <style>
+            .meme {
+                width: 300px; 
+                border: 1px solid silver;
                 padding: 0.5em;
+                text-align: center;
+                margin: 0.5em;
+                vertical-align: middle;
             }
 
-            #img-file-content img {
-                max-width: 100%;
-            }
+
+
         </style>
     </head>
     <body>
+        <p><a href="login.php">Login</a></p>
+        <p><a href="addfile.php">Upload Image</a></p>
         <?php
-        
-        $email = filter_input(INPUT_POST, 'email');
-        $password = filter_input(INPUT_POST, 'password');
-        
-        //Creates and Instance of the Class
-        $util = new Util();
-        $dbc = new DB($util->getDBConfig());
-        $validtor = new Validator(); //
-        $db = $dbc->getDB();
-        $login = new Login(); // New Login Class Instance
-
-        $errors = array();
-
-        if ($util->isPostRequest()) {
-
-            if ($validtor->emailIsEmpty($email)) {
-                $errors[] = 'Email must be Entered';
-            }
-
-            if (!$validtor->emailIsValid($email)) {
-                $errors[] = 'Email is not in the Correct Format';
-            }
-            if ($validtor->passwordIsEmpty($password)) {
-                $errors[] = 'Password Must be Entered';
-            }
-             if (!$login->emailDoesnotExist($email)) {
-                $errors[] = 'Email Does not Exist. Please Signup.';
-            }
-     
-            if (count($errors) <= 0) {
-
-                $user_id = $login->verifyCheck($email, $password);
-                if ($user_id > 0) {
-                    $_SESSION['user_id'] = $user_id;
-                    header('Location:addfile.php');
-                } else {
-                    $errors = 'Login Failed!';
+            $files = array();
+            $directory = '.' . DIRECTORY_SEPARATOR . 'uploads';
+            $dir = new DirectoryIterator($directory);
+            foreach ($dir as $fileInfo) {
+                if ($fileInfo->isFile()) {
+                    $files[$fileInfo->getMTime()] = $fileInfo->getPathname();
                 }
-            }               
-        }
+            }
+
+            krsort($files);
+
+            foreach ($files as $key => $path):
+                ?>  
+                <div class="meme"> 
+                    <img src="<?php echo $path; ?>" /> <br />
+                    <?php echo date("l F j, Y, g:i a", $key); ?>
+                    <!-- Place this tag where you want the share button to render. -->
+                    <div class="g-plus" data-action="share" data-href="<?php echo $path; ?>"></div>
+                </div>
+            <?php
+            endforeach;
         ?>
-        
-        <?php include './templates/login-form.html.php'; ?>
-        <?php include './templates/messages.html.php'; ?>
-        <?php include './templates/errors.html.php'; ?>
-        <!--Link to the Sign Up Page-->
-        <a href="signup.php">Sign Up</a> </br>
-          <!--Link to the View meme Page-->
-          <a href="view.php">View Meme</a>
+
+        <!-- Place this tag in your head or just before your close body tag. -->
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     </body>
 </html>

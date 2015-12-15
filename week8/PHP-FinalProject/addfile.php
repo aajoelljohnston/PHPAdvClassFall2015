@@ -41,7 +41,7 @@ if ($logout == true) {
 }
 
 if (!isset($_SESSION['user_id'])) {
-    header('Location:index.php');
+    header('Location:login.php');
 }
 
 else if (isset($_SESSION['user_id'])) {
@@ -50,7 +50,7 @@ else if (isset($_SESSION['user_id'])) {
 ?>
         <h2>Image Files</h2>
         <p>
-            <a href="view.php">View Images</a>
+            <a href="index.php">View Images</a>
         </p>
         <p>
         <form>
