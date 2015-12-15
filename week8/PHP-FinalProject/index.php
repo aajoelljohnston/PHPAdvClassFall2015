@@ -24,6 +24,20 @@
     <body>
         <p><a href="login.php">Login</a></p>
         <p><a href="addfile.php">Upload Image</a></p>
+        <p><a href="deletefile.php">Delete Your Images</a></p>
+        
+        <div id="fb-root"></div>
+        <script>(function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+        
         <?php
             $files = array();
             $directory = '.' . DIRECTORY_SEPARATOR . 'uploads';
@@ -42,11 +56,10 @@
                     <img src="<?php echo $path; ?>" /> <br />
                     <?php echo date("l F j, Y, g:i a", $key); ?>
                     <!-- Place this tag where you want the share button to render. -->
-                    <div class="g-plus" data-action="share" data-href="<?php echo $path; ?>"></div>
+                    <div class="g-plus" data-action="share" data-href="' . $path . '"></div>
+                    <div class="fb-share-button" data-href="' . $path . '" data-layout="button_count"></div>
                 </div>
-            <?php
-            endforeach;
-        ?>
+            <?php endforeach; ?>
 
         <!-- Place this tag in your head or just before your close body tag. -->
         <script src="https://apis.google.com/js/platform.js" async defer></script>
