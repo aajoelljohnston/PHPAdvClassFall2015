@@ -30,8 +30,7 @@ class Delete {
     }
 
     public function deleteFile($file){
-        unlink("./upload/$file");
-        echo $file;
+        unlink('./uploads/'.$file);
     }
     
     public function deleteUserPhotos($filename) {

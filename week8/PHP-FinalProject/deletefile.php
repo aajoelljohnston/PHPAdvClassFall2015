@@ -42,22 +42,23 @@ if (!isset($_SESSION['user_id'])) {
     header('Location:login.php');
 }
 ?>
-
-<?php
-    $util = new Util();
-    $users_images = new Users_Images();
-    $userimages = $users_images->showUsersImages($_SESSION['user_id']);
-?>
         
 <?php
 $util = new Util();
 if ($util->isPostRequest()) {
 $filename = filter_input(INPUT_POST, 'filename');
-$deleteFromFolder = new Delete();
-$deleteFromFolder->deleteFile($filename);
-$deleteFromDB = new Delete();
-$deleteFromDB->deleteUserPhotos($filename);
+$deletefile = new Delete();
+$deletefile->deleteFile($filename);
+$deletefile->deleteUserPhotos($filename);
 }
+?>
+        
+<?php
+    $util = new Util();
+    $users_images = new Users_Images();
+    $userimages = $users_images->showUsersImages($_SESSION['user_id']);
+    
+    $directory = '.' . DIRECTORY_SEPARATOR . 'uploads/';
 ?>
         
     <?php foreach ($userimages as $row): ?>
@@ -70,7 +71,7 @@ $deleteFromDB->deleteUserPhotos($filename);
             <div class="fb-share-button" data-href="' . $path . '" data-layout="button_count"></div> <br /><br />
             <form action="#" method="POST">
                 <input class="btn" type="submit" value="Delete" />
-                <input type="hidden" value="' . $row['filename'] . '" name="filename"/>
+                <input type="hidden" value="<?php echo $row['filename']; ?>" name="filename"/>
                 </form>
         </div>;
                 
