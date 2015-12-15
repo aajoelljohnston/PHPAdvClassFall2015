@@ -197,7 +197,7 @@ try {
     
     $util = new Util();
     $save_uploads = new Save_Uploads(); 
-    $save_uploads->save_UploadedImages(($_SESSION['user_id']), $fileName);
+    $save_uploads->save_UploadedImages(($_SESSION['user_id']), $fileName . '.' . $ext);
     $message = 'File is uploaded successfully.';
 } catch (RuntimeException $e) {
 

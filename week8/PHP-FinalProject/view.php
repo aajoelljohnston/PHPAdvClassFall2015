@@ -52,10 +52,14 @@
         else {
              $util = new Util();
              $users_images = new Users_Images();
-             $userimages =  array();
-             $users_images->showUsersImages($_SESSION['user_id']);
+             $userimages = $users_images->showUsersImages($_SESSION['user_id']);
+             
         }
         ?>
+        
+        <?php foreach ($userimages as $row): ?>
+        <img src="./uploads/<?php echo $row['filename']; ?>" />
+        <?php endforeach; ?>
 
         <!-- Place this tag in your head or just before your close body tag. -->
         <script src="https://apis.google.com/js/platform.js" async defer></script>
