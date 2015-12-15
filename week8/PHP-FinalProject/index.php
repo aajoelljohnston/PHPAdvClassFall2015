@@ -1,4 +1,19 @@
-<?php require_once './autoload.php';?>
+<?php require_once './autoload.php';
+
+$util = new Util();
+$logout = filter_input(INPUT_GET, 'logout');
+
+if ($logout == true) {
+    $_SESSION['user_id'] = null;
+}
+
+if (!isset($_SESSION['user_id'])) {
+    echo '<a href="login.php">Login</a>';
+}    
+else if (isset($_SESSION['user_id'])) {
+    echo '<H2><a href="?logout=true" >Log Out</a></H2>';
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,7 +37,6 @@
         </style>
     </head>
     <body>
-        <p><a href="login.php">Login</a></p>
         <p><a href="addfile.php">Upload Image</a></p>
         <p><a href="deletefile.php">Delete Your Images</a></p>
         
