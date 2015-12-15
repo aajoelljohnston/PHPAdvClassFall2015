@@ -32,13 +32,15 @@ class Users_Images {
 
      public function showUsersImages($user_id) {
 
+        $results = array();
         $stmt = $this->getDb()->prepare('SELECT * FROM photos WHERE user_id = :user_id');
 
         $binds = array(
             ":user_id" => $user_id
         );
         if ($stmt->execute($binds) && $stmt->rowCount() > 0) {
-            return true;
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                return $results;
         }
         return false;
     }

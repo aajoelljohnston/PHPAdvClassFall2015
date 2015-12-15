@@ -32,7 +32,6 @@
     <body>
      
 <?php
-echo ($_SESSION['user_id']);
 
 $util = new Util();
 $logout = filter_input(INPUT_GET, 'logout');

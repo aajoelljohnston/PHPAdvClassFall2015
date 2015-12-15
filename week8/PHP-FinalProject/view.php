@@ -1,3 +1,4 @@
+<?php require_once './autoload.php';?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,6 +22,7 @@
     </head>
     <body>
         <p><a href=".">Home</a></p>
+        <p><a href="addfile.php">Upload Image</a></p>
         <?php
         if ((!isset($_SESSION['user_id'])) || ($_SESSION['user_id'] == null)) {
             
@@ -41,9 +43,9 @@
                     <img src="<?php echo $path; ?>" /> <br />
                     <?php echo date("l F j, Y, g:i a", $key); ?>
                     <!-- Place this tag where you want the share button to render. -->
-                    <div class="g-plus" data-action="share" data-href="<?php echo $path; ?>"></div> 
+                    <div class="g-plus" data-action="share" data-href="<?php echo $path; ?>"></div>
+                    <input type="submit" name="delete" value="Delete" />
                 </div>
-
             <?php
             endforeach;
         }
@@ -51,11 +53,10 @@
              $util = new Util();
              $users_images = new Users_Images();
              $userimages =  array();
-             $Users_Images->showUsersImages($_SESSION['user_id']);  
+             $users_images->showUsersImages($_SESSION['user_id']);
         }
         ?>
 
-        <p><a href=".">Home</a></p>
         <!-- Place this tag in your head or just before your close body tag. -->
         <script src="https://apis.google.com/js/platform.js" async defer></script>
 
